@@ -1,40 +1,30 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const SingleTodo = styled.label`
-  margin: 10px 0;
-`
-const Checkbox = styled.input`
+const Label = styled.label``
+
+const Checkbox = styled.input.attrs({ type: 'checkbox' })`
   margin: 0 10px;
 `
-const ListTodo = styled.li`
+const StyledTodo = styled.li`
   list-style: none;
+  padding: 0 10px;
 `
-
-export function Todo({ todos, onCheck, filter }) {
-  switch (filter) {
-    case 'all':
-      return renderTodo(todos, onCheck)
-    case 'completed':
-      return renderTodo(todos.filter(todo => todo.completed), onCheck)
-    case 'open':
-      return renderTodo(todos.filter(todo => !todo.completed), onCheck)
-    default:
-      return renderTodo(todos.filter(todo => !todo.completed), onCheck)
-  }
-}
-
-function renderTodo(todos, onCheck) {
-  return todos.map(todo => (
-    <ListTodo key={todo.id}>
-      <SingleTodo>
-        <Checkbox
-          onChange={() => onCheck(todo)}
-          checked={todo.completed}
-          type='checkbox'
-        />
+const DeleteButton = styled.span`
+  margin: 0 10px;
+`
+function Todo({ todo, onComplete, onDelete }) {
+  return (
+    <StyledTodo>
+      <Label>
+        <Checkbox onChange={() => onComplete(todo)} checked={todo.completed} />
         {todo.text}
-      </SingleTodo>
-    </ListTodo>
-  ))
+      </Label>
+      <DeleteButton onClick={() => onDelete(todo)}>
+        {String.fromCodePoint(0x274e)}
+      </DeleteButton>
+    </StyledTodo>
+  )
 }
+
+export default Todo

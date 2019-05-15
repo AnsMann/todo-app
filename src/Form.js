@@ -7,12 +7,22 @@ export const Button = styled.button`
   color: green;
   margin: 10px 5px;
 `
+const StyledForm = styled.form``
 
 export function Form({ onSubmitTodo }) {
+  function handleSubmit(event) {
+    event.preventDefault()
+    const form = event.target
+
+    onSubmitTodo(form.todo.value)
+    form.reset()
+    form.todo.focus()
+  }
+
   return (
-    <form onSubmit={onSubmitTodo}>
+    <StyledForm onSubmit={handleSubmit}>
       <input name='todo' type='text' placeholder='Type to-do here' />
       <Button>+</Button>
-    </form>
+    </StyledForm>
   )
 }
